@@ -1,0 +1,144 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>Pārrunu mērķi</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+
+		var rindasNumurs;
+
+		window.onload = function(){
+
+			rindasNumurs = 1;
+			
+			document.getElementById("poga").onclick = function(){
+
+				var table = document.getElementById("myTable");
+				var tablesize = table.length;
+				var row = table.insertRow(tablesize);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);				
+				var cell3 = row.insertCell(2);
+				var cell4 = row.insertCell(3);
+				var cell5 = row.insertCell(4);
+				var cell6 = row.insertCell(5);
+				
+				var merkaIpatsvarsNr = 'merkaIpatsvars' + rindasNumurs;
+				var merkaLielumsNr = 'merkaLielums' + rindasNumurs;
+				var merkaFaktiskaIzpildeNr = 'merkaFaktiskaIzpilde' + rindasNumurs;
+				var merkaIzpildeNr = 'merkaIzpilde' + rindasNumurs;
+				var kopejaMerkaIzpildeNr = 'kopejaMerkaIzpilde' + rindasNumurs;
+				
+												
+
+				cell1.appendChild(document.createElement("textarea"));
+				
+				var cel2 = cell2.appendChild(document.createElement("input"));
+				$(cel2).attr({"type":"number","name":"merkaIpatsvars","id": merkaIpatsvarsNr,"oninput":"apr()"});
+				
+				var cel3 = cell3.appendChild(document.createElement("input"));
+				$(cel3).attr({"type":"number","name":"merkaLielums","oninput":"apr()","id": merkaLielumsNr});
+				var cel4 = cell4.appendChild(document.createElement("input"));
+				$(cel4).attr({"type":"number","name":",merkaIzpilde","oninput":"apr()","id": merkaFaktiskaIzpildeNr});
+				
+				var cel5 = cell5.appendChild(document.createElement("span")).setAttribute("id", merkaIzpildeNr);
+
+				var cel6 = cell6.appendChild(document.createElement("span"));
+				$(cel6).attr({"name":"kopejaMerkaIzpilde","id": kopejaMerkaIzpildeNr});
+
+
+				rindasNumurs++;
+			}
+			
+	}
+	function apr(){	
+
+		for (var i = 1; i < rindasNumurs; i++) {
+			var merkaIpatsvarsId = 'merkaIpatsvars' + i;
+			var merkaLielumsId = 'merkaLielums' + i;
+			var merkaFaktiskaIzpildeId = 'merkaFaktiskaIzpilde' + i;
+			var merkaIzpildeId = 'merkaIzpilde' + i;
+			var kopejaMerkaIzpildeId = 'kopejaMerkaIzpilde' + i;
+
+
+			var merkaIpatsvars = document.getElementById(merkaIpatsvarsId).value;
+			var merkaFaktiskaIzpilde = document.getElementById(merkaFaktiskaIzpildeId).value;
+			var merkaLielums = document.getElementById(merkaLielumsId).value;
+			
+
+			merkaIzpildesRezultats = (merkaFaktiskaIzpilde/merkaLielums)*100;
+			kopejasMerkaIzpildesRezultats = merkaIpatsvars * (merkaIzpildesRezultats/100);
+
+			
+			document.getElementById(merkaIzpildeId).innerHTML = merkaIzpildesRezultats;
+			document.getElementById(kopejaMerkaIzpildeId).innerHTML = kopejasMerkaIzpildesRezultats;
+		}
+
+		
+		var ipatsvarsKopējais = 0;
+		merkaIpatsvarsGarums = document.getElementsByName("merkaIpatsvars").length;
+		var merkaIpatsvarsVertiba = [];
+  
+    	for (var i = 0; i < merkaIpatsvarsGarums; i++) {
+    		merkaIpatsvarsVertiba[i] = document.getElementsByName("merkaIpatsvars")[i].value;
+
+       		ipatsvarsKopējais = ipatsvarsKopējais + Number(merkaIpatsvarsVertiba[i]);
+       		
+    	}
+
+
+    	var kopejaMerkaIzpilde = 0;
+    	kopejaMerkaIzpildeGarums = document.getElementsByName("kopejaMerkaIzpilde").length;
+    	var kopejaMerkaIzpildesVertiba = [];
+
+    	for (var i = 0; i < kopejaMerkaIzpildeGarums; i++) {
+    		kopejaMerkaIzpildesVertiba[i] = document.getElementsByName("kopejaMerkaIzpilde")[i].innerHTML;
+
+    		if (isNaN(kopejaMerkaIzpildesVertiba[i])) {
+
+    			kopejaMerkaIzpildesVertiba[i] = 0;
+    		}
+    		
+    		
+    		kopejaMerkaIzpilde = kopejaMerkaIzpilde + Number(kopejaMerkaIzpildesVertiba[i]);
+    	}
+
+
+    	document.getElementById("kopejaisIpatsvars").innerHTML = ipatsvarsKopējais;
+    	document.getElementById("kopejaisIzpilde").innerHTML = kopejaMerkaIzpilde;
+		
+	}
+		
+	</script>
+</head>
+<body>
+	<table class="table table-bordered" style="margin: 10px">
+  <thead>
+    <tr>
+      <th scope="col">Mērķis</th>
+      <th scope="col">Mērķa īpatsvars %</th>
+      <th scope="col">Mērķa lielums</th>
+      <th scope="col">Mērķa faktiskā izpilde</th>
+      <th scope="col">Mērķa izpilde %</th>
+      <th scope="col">Mērķa izpilde % ievērojot mērķa īpatsvaru</th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+  </tbody>
+  <tfoot>
+  	 <tr>
+      <td scope="row"><button id="poga">Pievienot rindu</button></td>
+      <td><span id="kopejaisIpatsvars">0</span></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><span id="kopejaisIzpilde">0</span></td>
+    </tr>
+  </tfoot>
+</table>
+</body>
+</html>
